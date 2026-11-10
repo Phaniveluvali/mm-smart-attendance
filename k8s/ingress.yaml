@@ -15,7 +15,7 @@ spec:
   - host: tecnics-internal.online
     http:
       paths:
-      - path: /mm-smart-attendance
+      - path: /mm-smartattendance
         pathType: Prefix
         backend:
           service:
