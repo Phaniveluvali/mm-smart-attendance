@@ -15,19 +15,41 @@ spec:
     matchLabels:
       app: mm-smart-attendance
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
+    type: Recreate
   template:
     metadata:
       labels:
         app: mm-smart-attendance
         app.kubernetes.io/name: mm-smart-attendance
     spec:
+      initContainers:
+      - name: seed-static-assets
+        image: krishnaveluvali/mm-smart-attendance:v1.0.2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: APP_VERSION
+          value: "v1.0.2"
+        command:
+        - sh
+        - -c
+        - |
+          set -eu
+          MARKER="/usr/share/nginx/html/.image-version"
+          if [ ! -f /usr/share/nginx/html/index.html ] || [ "$(cat "$MARKER" 2>/dev/null || true)" != "$APP_VERSION" ]; then
+            echo "Seeding static assets for $APP_VERSION into PVC..."
+            find /usr/share/nginx/html -mindepth 1 -maxdepth 1 ! -name 'lost+found' -exec rm -rf {} +
+            cp -r /opt/mm-static/. /usr/share/nginx/html/
+            printf '%s\n' "$APP_VERSION" > "$MARKER"
+            chmod -R a+rX /usr/share/nginx/html
+          else
+            echo "PVC already initialized for $APP_VERSION; preserving host PV contents."
+          fi
+        volumeMounts:
+        - name: static-html
+          mountPath: /usr/share/nginx/html
       containers:
       - name: nginx
-        image: krishnaveluvali/mm-smart-attendance:v1.0.1
+        image: krishnaveluvali/mm-smart-attendance:v1.0.2
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -52,3 +74,10 @@ spec:
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 5
+        volumeMounts:
+        - name: static-html
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: static-html
+        persistentVolumeClaim:
+          claimName: mm-smart-attendance-pvc
