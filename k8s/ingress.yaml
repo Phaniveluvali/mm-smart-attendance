@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mm-smart-attendance-ingress
+  namespace: mm-smart-attendance
+  labels:
+    app: mm-smart-attendance
+    app.kubernetes.io/name: mm-smart-attendance
+    app.kubernetes.io/managed-by: argocd
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: tecnics-internal.online
+    http:
+      paths:
+      - path: /mm-smart-attendance
+        pathType: Prefix
+        backend:
+          service:
+            name: mm-smart-attendance-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - tecnics-internal.online
+    secretName: ca-vmx-tls-cert
