@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="css/base.css">
 <style>
+  /* no grey tap flash on buttons and the bottom bar in the installed app */
+  * { -webkit-tap-highlight-color: transparent; }
+  html, body { overscroll-behavior: none; }
   html, body { height: 100%; }
   body { background: #E4EAE7; overflow: hidden; font-size: 14.5px; }
   .phone { position: relative; width: 100%; height: 100dvh; background: #F7F9F8; overflow: hidden; display: flex; flex-direction: column; }
@@ -725,6 +728,108 @@
   .oq-f .btn { width: 100%; }
   .oq-blk { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; background: #FFFBF2; border: 1.5px dashed #E8B65A; color: #7A4A0E; border-radius: 14px; padding: 10px 12px; font-size: 12.5px; line-height: 1.45; }
   .oq-blk .ic { flex: none; margin-top: 2px; }
+  /* ===== Home alignment fixes (header, check-in card, section titles, summary cards) ===== */
+  /* header: logo + name shrink first, controls never overlap */
+  .h2-bar.appbar { gap: 6px; }
+  .h2-bar .grow { flex: 0 0 0; }
+  .h2-brand { flex: 1 1 auto; overflow: hidden; }
+  .h2-brand span { min-width: 0; overflow: hidden; }
+  .h2-brand b, .h2-brand small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .h2-lang, .h2-bell, .h2-av { flex: none; }
+  .h2-lang .lg-s { display: none; }
+  .h2-lang .lg-d { display: inline-flex; }
+  @media (max-width: 400px) {
+    .h2-brand .mmlogo-img, .h2-brand .mmlogo { height: 38px !important; }
+    .h2-brand b { font-size: 14px; } .h2-brand small { font-size: 9.5px; }
+    .h2-lang { padding: 6px 8px; gap: 4px; }
+    .h2-lang .lg-f, .h2-lang .lg-d { display: none; } .h2-lang .lg-s { display: inline; font-size: 13px; }
+    .h2-bell { width: 32px; }
+    .h2-av { width: 36px; height: 36px; font-size: 13px; }
+  }
+  @media (max-width: 350px) { .h2-brand > i, .h2-brand span { display: none; } }
+
+  /* check-in card: text on top, buttons in their own full-width row on phones */
+  .h2-attrow { flex-wrap: wrap; row-gap: 12px; }
+  .h2-at { flex: 1 1 0; }
+  .h2-at b { font-size: 14.5px; }
+  .h2-ab { flex: 1 1 100%; }
+  .h2-ab .h2-punch { flex: 1; justify-content: center; padding-block: 11px; }
+  .h2-ab .h2-map { height: auto; min-height: 42px; }
+  /* title always on one line */
+  .h2-at b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Pending Approval / Unread Messages: one card per row – icon, label, count, arrow */
+  .h2-stats { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .h2-stats button { display: flex; align-items: center; gap: 11px; padding: 10px 12px; border-radius: 14px; }
+  .h2-stats button > span { width: 34px; height: 34px; }
+  .h2-stats button > span svg { width: 18px; height: 18px; }
+  .h2-stats button > div { flex: 1; min-width: 0; display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: center; gap: 8px; }
+  .h2-stats b { font-size: 13px; line-height: 1; margin: 0; min-width: 22px; height: 22px; padding: 0 7px; border-radius: 99px; display: grid; place-items: center; }
+  .h2-stats .amber b { background: #FDEBD3; color: #9A5B0E; } .h2-stats .blue b { background: #DFEAF8; color: #1F4E7A; }
+  .h2-stats small { font-size: 13.5px; font-weight: 600; color: #0F1B2A; }
+  .h2-stats button > i { margin-inline-start: auto; }
+
+  /* attendance location card: status dot lines up with the first line of the message */
+  .geo .st { align-items: flex-start; line-height: 1.35; }
+  .geo .st .dot { flex: none; margin-top: 6px; }
+  .geo .chks { margin-top: 8px; }
+
+  /* compact bottom navigation */
+  .nav { padding: 5px 8px calc(6px + env(safe-area-inset-bottom)); border-radius: 18px 18px 0 0; gap: 2px; }
+  .nav button { font-size: 10px; gap: 1px; padding: 5px 0 4px; border-radius: 12px; line-height: 1.2; }
+  .nav button .ni { height: 20px; }
+  .nav button .ni svg { width: 18px; height: 18px; }
+  /* active tab: no shadow or outline, small corner radius */
+  .nav button.on { box-shadow: none; border: 0; outline: none; border-radius: 8px; }
+  .nav button:focus, .nav button:focus-visible { outline: none; }
+  .nav .cnt { top: 1px; inset-inline-start: calc(50% + 4px); font-size: 9px; line-height: 13px; padding: 0 4px; border-width: 1.5px; }
+
+  /* breathing room: header → banner, and date → shift card */
+  .h2-bar.appbar { padding-bottom: 10px; }
+  .h2-hero { padding-top: 14px; padding-bottom: 34px; }
+  .h2-photo { top: 8px; border-radius: 0 0 0 18px; }
+  .h2-shift { margin-top: -14px; }
+  /* header shows only the logo now – room for the full language label on normal phones */
+  @media (min-width: 331px) { .h2-lang .lg-f { display: inline; } .h2-lang .lg-s { display: none; } }
+  @media (max-width: 340px) { .h2-at b { font-size: 13.5px; } .h2-ai { width: 40px; height: 40px; } }
+
+  /* section titles never wrap */
+  .h2-sec > b { white-space: nowrap; font-size: 17px; }
+  .h2-pill { white-space: nowrap; flex: none; }
+  .h2-all { white-space: nowrap; flex: none; }
+  @media (max-width: 360px) { .h2-sec > b { font-size: 15.5px; } .h2-sec { gap: 7px; } }
+
+  /* ===== Home banner: one left edge, 4/8px spacing rhythm, text never runs over the photo ===== */
+  .h2-hero { display: flex; align-items: center; min-height: 150px; padding: 12px 14px 32px; }
+  .h2-photo { top: 0; width: 58%; border-radius: 0; -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0,0,0,.35) 18%, #000 42%); mask-image: linear-gradient(90deg, transparent 0, rgba(0,0,0,.35) 18%, #000 42%); }
+  [dir=rtl] .h2-photo { -webkit-mask-image: linear-gradient(90deg, transparent 0, rgba(0,0,0,.35) 18%, #000 42%); mask-image: linear-gradient(90deg, transparent 0, rgba(0,0,0,.35) 18%, #000 42%); }
+  .h2-in { max-width: 60%; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .h2-greet { font-size: 13px; line-height: 18px; font-weight: 600; color: #6B7684; margin: 0 0 2px; }
+  .h2-name { font-size: 24px; line-height: 28px; margin: 0 0 8px; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* role and date share the same icon column and text start */
+  .h2-role, .h2-date { display: flex; align-items: center; gap: 6px; max-width: 100%; min-width: 0; font-size: 12.5px; line-height: 18px; font-weight: 600; color: #33414F; }
+  .h2-role > span, .h2-date > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .h2-role .ic, .h2-date .ic { width: 15px; height: 15px; flex: none; color: #1F4E7A; }
+  .h2-date { margin: 4px 0 0; padding: 0; background: none; box-shadow: none; border-radius: 0; }
+  .h2-date [data-clock] { font-variant-numeric: tabular-nums; }
+  @media (max-width: 360px) { .h2-name { font-size: 22px; line-height: 26px; } .h2-in { max-width: 64%; } .h2-photo { width: 54%; } }
+/* calendar legend: always one line */  .cal .lg { flex-wrap: nowrap; justify-content: space-between; gap: 6px; padding: 0 2px; font-size: 10.5px; white-space: nowrap; }  .cal .lg span { gap: 4px; min-width: 0; }  .cal .lg i { width: 8px; height: 8px; border-radius: 50%; flex: none; }  @media (max-width: 340px) { .cal .lg { font-size: 9.5px; gap: 4px; } }
+  /* punch history: a real 4-column table – date | status | in | out – every column lines up */
+  .hlist .hhead, .hlist .hrow { display: grid; grid-template-columns: 84px minmax(0, 1fr) 44px 44px; column-gap: 10px; align-items: center; }
+  .hlist .hhead { padding: 10px 0 8px; border-bottom: 1px solid var(--line); font-size: 10.5px; font-weight: 700; color: #8A96A3; text-transform: uppercase; letter-spacing: .04em; }
+  .hlist .hrow { padding: 11px 0; font-size: 13px; }
+  .hlist .hrow .d { display: contents; }
+  .hlist .hrow .d b { font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .hlist .hrow .d .badge { justify-self: start; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hlist .hhead span:nth-child(n+3), .hlist .hrow .tm { text-align: end; justify-self: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .hlist .hrow .tm { font-weight: 600; color: #0F1B2A; }
+  .hlist .hrow .tm.muted { color: #6B7684; font-weight: 500; }
+  .hlist .hhead + .hrow { border-top: 0; }
+  [dir=rtl] .hlist .hhead { letter-spacing: 0; }
+  @media (max-width: 340px) { .hlist .hhead, .hlist .hrow { grid-template-columns: 78px minmax(0, 1fr) 40px 40px; column-gap: 8px; } .hlist .hrow { font-size: 12.5px; } }
+  /* Today's Tasks: each task is its own card with an 8px gap */
+  .h2-card.h2-tasks { background: none; border: 0; box-shadow: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .h2-tasks .h2-task, .h2-tasks .h2-task + .h2-task { background: #fff; border: 1px solid #EDF1F5; border-radius: 14px; box-shadow: 0 3px 10px rgba(20,40,70,.05); padding: 10px; }
+  .h2-tasks .h2-task.overdue, .h2-tasks .h2-task.overdue + .h2-task.overdue { background: linear-gradient(90deg, #FDEDEE, #FFF7F7); border-color: #F8D7D7; }
 </style>
 </head>
 <body>

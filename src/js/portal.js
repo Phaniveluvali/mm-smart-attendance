@@ -1,6 +1,8 @@
 /* MM Smart Attendance – web management portal (Muscat Municipality design) */
 (function () {
   'use strict';
+  // inside the demo console the portal is already scaled by the console – don't scale it twice
+  try { if (window.top !== window) document.documentElement.classList.add('embed'); } catch (e) { document.documentElement.classList.add('embed'); }
   const { t, esc, icon: I } = MM;
   const db = () => MM.db();
   const AR = () => MM.lang === 'ar';
@@ -56,7 +58,7 @@
     'Integrations': 'التكاملات', 'Users & Roles': 'المستخدمون والأدوار', 'Mobile App Services': 'خدمات التطبيق', 'Sync Log': 'سجل المزامنة', 'Run now': 'تشغيل الآن', 'Reset device': 'إعادة تعيين الجهاز', 'Block (leaver)': 'حظر (مغادر)', 'Unblock': 'إلغاء الحظر',
     'Missed punch': 'بصمة فائتة', 'Annual leave': 'إجازة سنوية', 'Overtime': 'عمل إضافي', 'Short permission': 'استئذان', 'Remote work': 'عمل عن بعد', 'Shift change': 'تغيير وردية', 'Task sign-off': 'اعتماد مهمة', 'Sign off': 'اعتماد',
     'Import from ArcGIS': 'استيراد من ArcGIS', 'New geofence': 'نطاق جديد', 'Polygon': 'مضلع', 'Circle': 'دائرة', 'Shape': 'الشكل', 'Buffer zone (m)': 'المنطقة العازلة (م)', 'Min GPS accuracy (m)': 'أدنى دقة للموقع (م)', 'Valid': 'الصلاحية', 'Permanent': 'دائم', 'Temporary': 'مؤقت', 'Radius (m)': 'نصف القطر (م)', 'Site name': 'اسم الموقع', 'Assigned to': 'مسند إلى', 'Add': 'إضافة',
-    'Drag the corner points to adjust the boundary': 'اسحب النقاط لتعديل الحدود', 'Drag the circle to move it · drag the edge point to resize': 'اسحب الدائرة لتحريكها · اسحب نقطة الحافة لتغيير الحجم', 'Drag the shape to move it · drag the corner points to reshape': 'اسحب الشكل لتحريكه · اسحب النقاط لتعديل الحدود', 'Geofence saved – phones use it immediately': 'تم حفظ النطاق – تستخدمه الهواتف فوراً', 'staff': 'موظفاً', 'ends': 'ينتهي',
+    'Keep typing to search places…': 'تابع الكتابة للبحث عن الأماكن…', 'Oman': 'عُمان', 'Could not find that place on the map – try another result': 'تعذّر العثور على هذا المكان على الخريطة – جرّب نتيجة أخرى', 'Drag the corner points to adjust the boundary': 'اسحب النقاط لتعديل الحدود', 'Drag the circle to move it · drag the edge point to resize': 'اسحب الدائرة لتحريكها · اسحب نقطة الحافة لتغيير الحجم', 'Drag the shape to move it · drag the corner points to reshape': 'اسحب الشكل لتحريكه · اسحب النقاط لتعديل الحدود', 'Geofence saved – phones use it immediately': 'تم حفظ النطاق – تستخدمه الهواتف فوراً', 'Search a location, area or coordinates…': 'ابحث عن موقع أو منطقة أو إحداثيات…', 'Searching…': 'جارٍ البحث…', 'No places found – try another name, or type coordinates like 23.6139, 58.5922': 'لم يتم العثور على أماكن – جرّب اسماً آخر أو اكتب إحداثيات مثل 23.6139, 58.5922', 'Coordinates': 'إحداثيات', 'Map search needs an internet connection – saved sites and coordinates still work': 'البحث في الخريطة يحتاج اتصالاً بالإنترنت – المواقع المحفوظة والإحداثيات تعمل', 'Geofence moved to': 'تم نقل النطاق إلى', 'Adjust the shape if needed, then press Save': 'عدّل الشكل إن لزم ثم اضغط حفظ', 'Clear': 'مسح', 'staff': 'موظفاً', 'ends': 'ينتهي',
     'Attendance rules': 'قواعد الحضور', 'Attendance periods & payroll locks': 'فترات الحضور وأقفال الرواتب', 'Open': 'مفتوح', 'Soft lock': 'قفل مبدئي', 'Hard lock': 'قفل نهائي', 'Payroll-complete · permanent': 'اكتمل الراتب · دائم', 'Export to Oracle Payroll': 'تصدير إلى رواتب أوراكل', 'Re-open': 'إعادة فتح',
     'Greener, Smarter Muscat Together': 'معاً نحو مسقط أكثر خضرة وذكاءً', 'Open mobile app': 'فتح تطبيق الهاتف', 'Demo console': 'وحدة العرض', 'Reset demo data': 'إعادة ضبط البيانات', 'Notifications': 'الإشعارات', 'Sent to phone': 'أُرسل إلى الهاتف', 'Reports': 'التقارير', 'Live today': 'مباشر اليوم', 'staff in the field': 'موظفاً في الميدان', 'on site': 'في الموقع', 'open tasks': 'مهمة مفتوحة', 'delayed': 'متأخرة', 'Live records for today': 'سجلات اليوم المباشرة', 'Records for': 'سجلات', 'present of': 'حاضر من', 'rostered': 'مجدولين', 'On time': 'في الموعد', 'On leave': 'في إجازة', 'Clear filters': 'مسح الفلاتر', 'Search by name, ID or department...': 'ابحث بالاسم أو الرقم أو الإدارة...', 'Geofence activity': 'نشاط النطاق', 'Last 7 days': 'آخر ٧ أيام', 'Active Employees': 'الموظفون النشطون', 'Not Checked In': 'لم يسجلوا الحضور',
   });
@@ -290,7 +292,7 @@
   }
   function sidebar() {
     const pc = pendingCount(); const act = ui.page === 'add-attendance' ? 'attendance' : ui.page;
-    return '<aside class="side"><div class="logo">' + MMB.logo(1) + '</div><nav>' + NAV.map(([k, l, ic, chev]) => '<button class="' + (act === k ? 'on' : '') + '" data-act="nav" data-arg="' + k + '" title="' + t(l) + '">' + I(ic, 21) + '<span class="lbl">' + t(l) + '</span>' + (k === 'approvals' && pc ? '<span class="cnt">' + pc + '</span>' : '') + '<span class="chev flip">' + I('fwd', 16) + '</span></button>').join('') + '</nav>' +
+    return '<aside class="side"><div class="logo">' + MMB.logo(1).replace(/ style="[^"]*"/, '') + '</div><nav>' + NAV.map(([k, l, ic, chev]) => '<button class="' + (act === k ? 'on' : '') + '" data-act="nav" data-arg="' + k + '" title="' + t(l) + '">' + I(ic, 21) + '<span class="lbl">' + t(l) + '</span>' + (k === 'approvals' && pc ? '<span class="cnt">' + pc + '</span>' : '') + '<span class="chev flip">' + I('fwd', 16) + '</span></button>').join('') + '</nav>' +
       '<div class="art">' + MMB.skyline(190) + '<div class="motto">OUR CITY<br>OUR PEOPLE<br>OUR FUTURE</div></div></aside>';
   }
   function header() {
@@ -369,7 +371,7 @@
       '<div class="l2-bg" style="background-image:url(assets/login-bg.webp)"></div><div class="l2-veil"></div>' +
       '<div class="l2-lang"><button data-act="lang" data-arg="en" class="' + (ar ? '' : 'on') + '">' + I('globe', 19) + 'English ' + I('down', 14) + '</button><i></i><button data-act="lang" data-arg="ar" class="' + (ar ? 'on' : '') + '">العربية</button></div>' +
       '<section class="l2-left">' + MMB.logo(.85) +
-      '<h1>' + (ar ? esc(t('Smart Attendance & Field Operations')) : 'Smart Attendance <em>&amp;</em><br>Field Operations') + '</h1><span class="l2-bar"></span>' +
+      '<h1>' + (ar ? esc(t('Smart Attendance & Field Operations')) : 'Smart Attendance <em>&amp;</em> Field Operations') + '</h1><span class="l2-bar"></span>' +
       '<p>' + t('Geofenced check-in, live field task tracking and payroll-ready attendance') + ' ' + t('in one secure platform for Muscat Municipality staff.') + '</p>' +
       '<div class="l2-feats">' + feats.map(([ic, l]) => '<div><span>' + I(ic, 26, 2) + '</span><b>' + brk(l) + '</b></div>').join('<i></i>') + '</div></section>' +
       '<form class="l2-card" data-form="login">' + MMB.logo(.9) + '<h2>' + t('Welcome Back') + '</h2><p class="d">' + t('Sign in to access the Smart Attendance & Field Operations Management System') + '</p>' +
@@ -525,13 +527,13 @@
       '<div class="grid" style="grid-template-columns:1.4fr 1fr;gap:12px;margin-top:14px"><div><span class="lbl">' + t('Notes (Optional)') + '</span><textarea class="inp" style="width:100%;min-height:104px" maxlength="250" data-f="add.notes" placeholder="Add any notes (e.g., site visit, task details, etc.)…">' + esc(f.notes) + '</textarea></div>' +
       '<div><span class="lbl">' + t('Photo (Optional)') + '</span><label class="upl" style="' + (f.photo ? 'background-image:url(' + f.photo + ');color:transparent' : '') + '">' + I('camera', 24) + t('Upload Photo') + '<small>JPG, PNG (Max 5MB)</small><input type="file" accept="image/*" id="addphoto" hidden></label></div></div>' +
       '<div class="grid" style="grid-template-columns:1.4fr 1fr;gap:12px;margin-top:18px"><button class="btn primary lg" type="submit" style="padding:13px">' + I('check', 19, 2.4) + t('Save Attendance') + '</button><button class="btn lg" type="button" data-act="addreset">' + I('refresh', 18) + t('Reset') + '</button></div></form>' +
-      '<div class="card pad"><div class="ch"><h3 style="font-size:18px;color:var(--ink)">' + I('pin', 22) + t('Live Location & Geofence') + '</h3><div class="r">' + pill(g.inside ? 'p-green' : 'p-red', t(g.inside ? 'Within Geofence' : 'Outside Geofence')) + '</div></div>' + mapSlot('add', 330) +
+      '<div class="card pad"><div class="ch"><h3 style="color:var(--ink)">' + I('pin', 22) + t('Live Location & Geofence') + '</h3><div class="r">' + pill(g.inside ? 'p-green' : 'p-red', t(g.inside ? 'Within Geofence' : 'Outside Geofence')) + '</div></div>' + mapSlot('add', 330) +
       '<div style="background:#F5F8F6;border-radius:10px;padding:10px 12px;margin-top:12px;font-weight:600">' + t('Location Details') + '</div><div class="kv" style="padding:10px 4px;grid-template-columns:130px 1fr">' +
       '<span>' + t('Address') + '</span><b>' + esc(f.pos ? 'Current GPS position' : MM.nm(g.loc)) + ', Oman</b><span>' + t('Latitude') + '</span><b>' + g.pt.lat.toFixed(4) + '</b><span>' + t('Longitude') + '</span><b>' + g.pt.lng.toFixed(4) + '</b>' +
       '<span>' + t('Accuracy') + '</span><b>' + Math.round(f.acc) + ' meters</b><span>' + t('Geofence Radius') + '</span><b>' + (g.home.shape === 'circle' ? (g.home.radius + g.home.buffer) + ' meters' : 'Polygon + ' + g.home.buffer + ' m buffer') + '</b><span>' + t('Status') + '</span><b>' + pill(g.inside ? 'p-green' : 'p-red', t(g.inside ? 'Within Geofence' : 'Outside Geofence')) + '</b></div></div>' +
-      '<div class="grid"><div class="card pad"><div class="ch"><h3 style="font-size:18px;color:var(--ink)">' + I('users', 21) + t("Today's Attendance") + '</h3></div><div class="flexr" style="gap:18px;flex-wrap:wrap">' + MMC.donut([{ v: c.present, color: '#0E7A43' }, { v: c.leave, color: '#9DB4F0' }, { v: c.absent, color: '#D92D20' }], 150, 20) +
+      '<div class="grid"><div class="card pad"><div class="ch"><h3 style="color:var(--ink)">' + I('users', 21) + t("Today's Attendance") + '</h3></div><div class="flexr" style="gap:18px;flex-wrap:wrap">' + MMC.donut([{ v: c.present, color: '#0E7A43' }, { v: c.leave, color: '#9DB4F0' }, { v: c.absent, color: '#D92D20' }], 150, 20) +
       '<div style="flex:1;min-width:160px"><b style="font-size:22px">' + MM.fmtNum(c.active) + '</b><div class="muted2" style="margin-bottom:6px">' + t('Active Employees') + '</div><ul class="dlist"><li><i style="background:#0E7A43"></i>' + t('Checked In') + '<b>' + MM.fmtNum(c.present) + ' (' + Math.round(c.present / c.active * 100) + '%)</b></li><li><i style="background:#9DB4F0"></i>' + t('On Leave') + '<b>' + c.leave + '</b></li><li><i style="background:#D92D20"></i>' + t('Not Checked In') + '<b>' + c.absent + '</b></li></ul></div></div></div>' +
-      '<div class="card pad"><div class="ch"><h3 style="font-size:18px;color:var(--ink)">' + I('user', 21) + t('Quick Employee Status') + '</h3><div class="r"><button class="link" data-act="nav" data-arg="attendance">' + t('View All') + '</button></div></div><div class="btabs round solid" style="margin-bottom:10px"><button class="' + (ui.quick === 'in' ? 'on' : '') + '" data-act="quick" data-arg="in">' + t('Checked In') + ' (' + inN + ')</button><button class="' + (ui.quick === 'out' ? 'on' : '') + '" data-act="quick" data-arg="out">' + t('Checked Out') + ' (' + outN + ')</button><button class="' + (ui.quick === 'geo' ? 'on' : '') + '" data-act="quick" data-arg="geo">' + t('Within Geofence') + '</button></div>' +
+      '<div class="card pad"><div class="ch"><h3 style="color:var(--ink)">' + I('user', 21) + t('Quick Employee Status') + '</h3><div class="r"><button class="link" data-act="nav" data-arg="attendance">' + t('View All') + '</button></div></div><div class="btabs round solid" style="margin-bottom:10px"><button class="' + (ui.quick === 'in' ? 'on' : '') + '" data-act="quick" data-arg="in">' + t('Checked In') + ' (' + inN + ')</button><button class="' + (ui.quick === 'out' ? 'on' : '') + '" data-act="quick" data-arg="out">' + t('Checked Out') + ' (' + outN + ')</button><button class="' + (ui.quick === 'geo' ? 'on' : '') + '" data-act="quick" data-arg="geo">' + t('Within Geofence') + '</button></div>' +
       (qlist.map(r => '<div class="li click" data-act="semp" data-arg="' + r.e.id + '">' + person(r.e) + '<span style="flex:1"></span><span class="tm">' + ampm((ui.quick === 'out' ? r.o : r.i).time) + '</span><span class="' + (r.geo === 'outside' ? 'bad-text' : 'ok-text') + '" style="font-size:12px;font-weight:600;display:flex;gap:3px;align-items:center">' + I('pin', 14) + t(r.geo === 'outside' ? 'Outside Geofence' : 'Within Geofence') + '</span></div>').join('') || '<p class="muted2">—</p>') + '</div></div></div>';
   }
   function saveAttendance() {
@@ -572,7 +574,7 @@
     if (fo.view === 'live') {
       foMapSpec('fo');
       const list = tl.filter(x => fo.team === 'all' || x.st === fo.team).filter(x => !fo.q || (x.e.name + x.e.role + x.e.wilayat).toLowerCase().includes(fo.q.toLowerCase()));
-      body = '<div class="split fo3 fo-live"><div class="card pad"><div class="ch"><h3 style="color:var(--ink);font-size:18px">' + t('Field Teams') + ' (' + tl.length + ')</h3></div>' +
+      body = '<div class="split fo3 fo-live"><div class="card pad"><div class="ch"><h3 style="color:var(--ink)">' + t('Field Teams') + ' (' + tl.length + ')</h3></div>' +
         '<div class="inp-ic" style="margin-bottom:10px">' + I('search', 16) + '<input class="inp" data-f="fo.q" value="' + esc(fo.q) + '" placeholder="' + t('Search team or employee...') + '"></div>' +
         '<div class="chipsel" style="margin-bottom:6px"><button class="' + (fo.team === 'all' ? 'on' : '') + '" data-act="foteam" data-arg="all">' + t('All') + ' (' + tl.length + ')</button>' + Object.keys(counts).map(k => '<button class="' + (fo.team === k ? 'on' : '') + '" data-act="foteam" data-arg="' + k + '">' + t(TEAM_PILL[k][0]) + ' (' + counts[k] + ')</button>').join('') + '</div>' +
         '<div style="max-height:520px;overflow-y:auto;margin-inline-end:-6px;padding-inline-end:6px">' + (list.length > 60 ? '<div class="muted2" style="padding:4px 0 8px">Showing 60 of ' + list.length + ' · search to find others</div>' : '') + list.slice(0, 60).map(({ e, c, st }) => '<div class="li click" data-act="foemp" data-arg="' + e.id + '" style="' + (fo.selEmp === e.id ? 'background:#F1F8F3;border-radius:10px;padding-inline:6px' : '') + '">' + person(e, st === 'offline' ? 'Last seen ' + ampm(c.time) : e.wilayat + ' · ' + ampm(c.time)) + pill(TEAM_PILL[st][1], t(TEAM_PILL[st][0])) + '<span class="flip muted">' + I('fwd', 16) + '</span></div>').join('') + '</div></div>' +
@@ -617,14 +619,14 @@
     const STEP = { assigned: 'Task assigned', ontheway: 'Travelling to site', onsite: 'Checked in (within geofence)', inprogress: 'Work started', delayed: 'Marked delayed', done: 'Completed & checked out', signed: 'Signed off by supervisor' };
     const cl = checklist(x);
     let inner = '';
-    if (pt === 'details') inner = '<div class="kv"><span>' + t('Location') + '</span><b>' + esc(L(x.loc, x.locAr)) + ' <a class="link" target="_blank" rel="noopener" href="' + openMaps(x.lat, x.lng) + '">' + t('Open in Maps') + ' ↗</a></b><span>' + t('Scheduled Date') + '</span><b>' + MM.fmtDate(x.due) + ', ' + ampm(x.created) + ' – ' + ampm(x.due) + '</b><span>' + t('Task Type') + '</span><b>' + esc(x.type) + '</b><span>' + t('Priority') + '</span><b>' + prio(x) + '</b><span>' + t('Assigned To') + '</span><div class="flexr">' + person(e) + '<span style="flex:1"></span><button class="btn sm icon" data-act="call" data-arg="' + x.assignee + '" title="Call">' + I('call', 16) + '</button><button class="btn sm icon" data-act="msg" data-arg="' + x.assignee + '" title="Message">' + I('chat', 16) + '</button></div>' +
-      (x.desc || x.instructions ? '<span>' + t('Description') + '</span><b>' + esc(x.desc || x.instructions) + '</b>' : '') + '</div>' +
+    if (pt === 'details') inner = '<div class="kv"><span>' + t('Location') + '</span><b>' + esc(L(x.loc, x.locAr)) + ' <a class="link" target="_blank" rel="noopener" href="' + openMaps(x.lat, x.lng) + '">' + t('Open in Maps') + ' ↗</a></b><span>' + t('Scheduled Date') + '</span><b>' + MM.fmtDate(x.due) + ', ' + ampm(x.created) + ' – ' + ampm(x.due) + '</b><span>' + t('Task Type') + '</span><b>' + esc(x.type) + '</b><span>' + t('Priority') + '</span><b>' + prio(x) + '</b><span>' + t('Assigned To') + '</span><div class="flexr kassign">' + person(e) + '<span style="flex:1"></span><button class="btn sm icon" data-act="call" data-arg="' + x.assignee + '" title="Call">' + I('call', 16) + '</button><button class="btn sm icon" data-act="msg" data-arg="' + x.assignee + '" title="Message">' + I('chat', 16) + '</button></div>' +
+      (x.desc || x.instructions ? '<span>' + t('Description') + '</span><b class="kdesc">' + esc(x.desc || x.instructions) + '</b>' : '') + '</div>' +
       '<div class="sec"><h4>' + t('Live Location') + '<span style="flex:1"></span><a class="link" target="_blank" rel="noopener" href="' + openMaps(x.lat, x.lng) + '">' + I('route', 15) + 'View Route</a></h4><div class="' + (inside ? 'ok-text' : 'bad-text') + '" style="font-weight:600">● ' + t(inside ? 'Within Geofence' : 'Outside Geofence') + '</div><div class="muted2">' + t('Last updated') + ': ' + (c ? ago(c.time) : '—') + '</div></div>' +
       '<div class="sec"><h4>' + t('Activity Timeline') + '</h4><ul class="tl2">' + hist.slice(0, 4).map(([s, tm]) => '<li><span class="d"></span><span><b style="font-weight:600">' + STEP[s] + '</b></span><span class="t">' + ampm(tm) + '</span></li>').join('') + '</ul></div>';
     else if (pt === 'checklist') inner = cl.map(ci => '<label class="chk"><input type="checkbox" disabled' + (ci.done ? ' checked' : '') + '>' + esc(ci.s) + '</label>').join('') + (x.notes ? '<div class="sec"><h4>' + t('Notes') + '</h4><div>' + esc(x.notes) + '</div></div>' : '') + (x.supNote ? '<div class="sec"><h4>Supervisor note</h4><div class="warn-text">' + esc(x.supNote) + '</div></div>' : '');
     else if (pt === 'photos') inner = (x.photos.length ? '<div class="photos3">' + x.photos.map(ph => '<div style="background-image:url(\'' + (ph.src || MM.samplePhotoSVG(ph.sample || 1)) + '\')"><span>' + MM.fmtTime(ph.time) + ' · ' + ph.lat.toFixed(3) + ', ' + ph.lng.toFixed(3) + '</span></div>').join('') + '</div><div class="ok-text" style="font-size:13px;margin-top:8px;font-weight:600">' + I('shield', 14) + ' EXIF time + GPS verified against task site</div>' : '<p class="muted">No photos yet.</p>') + '<label class="btn sm" style="margin-top:10px">' + I('plus', 15) + t('Add Photo') + '<input type="file" accept="image/*" data-taskphoto="' + x.id + '" hidden></label>';
     else inner = '<ul class="tl2">' + hist.map(([s, tm]) => '<li><span class="d"></span><span><b style="font-weight:600">' + STEP[s] + '</b><small>' + esc(s === 'onsite' && x.distance != null ? x.distance + ' m from site' : s === 'assigned' ? 'by ' + x.createdBy : L(x.loc, x.locAr).split(',')[0]) + '</small></span><span class="t">' + ampm(tm) + '</span></li>').join('') + '</ul>';
-    return '<div class="card dpanel"><div class="dh"><button class="btn ghost sm icon" data-act="' + (ctx === 'fo' ? 'fosel' : 'tksel') + '" data-arg=""><span class="flip">' + I('back', 18) + '</span></button><b style="font-size:16px;flex:1;align-self:center">' + t('Task Details') + '</b>' + tStatus(x) + '</div>' +
+    return '<div class="card dpanel"><div class="dh"><button class="btn ghost sm icon" data-act="' + (ctx === 'fo' ? 'fosel' : 'tksel') + '" data-arg=""><span class="flip">' + I('back', 18) + '</span></button><b class="dh-t" style="flex:1;align-self:center">' + t('Task Details') + '</b>' + tStatus(x) + '</div>' +
       '<div class="flexr" style="align-items:flex-start;margin-bottom:6px"><span style="width:44px;height:44px;border-radius:10px;background:#EEF5F0;color:var(--brand);display:grid;place-items:center;flex:none">' + I(tIcon(x), 22) + '</span><div style="flex:1;min-width:0"><h2>' + esc(L(x.title, x.titleAr)) + (x.title.includes('–') ? '' : ' – ' + esc(L(x.loc, x.locAr).split(',')[0])) + '</h2><span class="muted2">' + x.id + '</span></div></div>' +
       '<div style="margin:12px 0"><div class="flexr" style="justify-content:space-between;font-weight:600;margin-bottom:6px"><span>' + t('Progress') + '</span><span>' + p + '%</span></div><div class="prog" style="height:8px"><i style="width:' + p + '%"></i></div></div>' +
       '<div class="tabs" style="margin-bottom:12px">' + tabs.map(([k, l]) => '<button class="' + (pt === k ? 'on' : '') + '" data-act="ptab" data-arg="' + k + '">' + t(l) + (k === 'photos' ? ' (' + x.photos.length + ')' : k === 'checklist' ? ' ' + cl.filter(c2 => c2.done).length + '/' + cl.length : '') + '</button>').join('') + '</div>' + inner +
@@ -835,7 +837,7 @@
     const area = Math.round(MM.siteArea(d));
     return hero({ crumbs: [['Home', 'dashboard'], ['Locations & Geofences']], title: t('Locations & Geofences'), sub: sites.length + ' sites · boundaries imported from MM ArcGIS · last sync ' + MM.relDay(arc.last) + ' ' + MM.fmtTime(arc.last), quote: 'Every site, precisely mapped.', art: 'fort', right: '<div class="flexr" style="flex-direction:column;align-items:stretch"><button class="btn" data-act="arcgis">' + I('upload', 17) + t('Import from ArcGIS') + '</button><button class="btn primary" data-act="newgeo">' + I('plus', 17) + t('New geofence') + '</button></div>' }) +
       '<div class="split" style="grid-template-columns:290px minmax(0,1fr) 320px"><div class="card pad"><div class="eyebrow" style="margin-bottom:8px">Sites</div>' + sites.map(s => '<div class="li click" data-act="geosel" data-arg="' + s.id + '" style="padding:10px;border-radius:10px;' + (s.id === ui.geo.sel ? 'background:#EFF7F2' : '') + '"><span class="ii">' + I(s.shape === 'circle' ? 'target' : 'map', 18) + '</span><div class="lt"><b>' + esc(MM.nm(s)) + '</b><small' + (s.valid === 'temporary' ? ' class="warn-text"' : '') + '>' + (s.valid === 'temporary' ? t('Temporary') + ' · ' + t('ends') + ' ' + esc(s.until) : (s.shape === 'circle' ? t('Circle') + ' ' + s.radius + ' m' : t('Polygon')) + ' · ' + db().employees.filter(e => e.siteId === s.id).length + ' ' + t('staff')) + '</small></div></div>').join('') + '</div>' +
-      '<div class="card" style="padding:0;overflow:hidden">' + mapSlot('geo', 560, '<div class="mapnote" style="inset-inline-start:auto;inset-inline-end:10px">' + I('info', 13) + ' ' + (draft().shape === 'circle' ? t('Drag the circle to move it · drag the edge point to resize') : t('Drag the shape to move it · drag the corner points to reshape')) + '</div>') + '<div class="flexr" style="padding:12px 16px;flex-wrap:wrap;gap:6px 20px;font-size:13.5px"><span>Source: ArcGIS parcel <b>' + esc(d.parcel) + '</b></span><span>Area <b>' + MM.fmtNum(area) + ' m²</b></span><span>Converted UTM 40N → WGS84</span></div></div>' +
+      '<div class="card" style="padding:0;overflow:hidden">' + mapSlot('geo', 560, geoSearchBox() + '<div class="mapnote" style="inset-inline-start:auto;inset-inline-end:10px;top:auto;bottom:10px">' + I('info', 13) + ' ' + (draft().shape === 'circle' ? t('Drag the circle to move it · drag the edge point to resize') : t('Drag the shape to move it · drag the corner points to reshape')) + '</div>') + '<div class="flexr" style="padding:12px 16px;flex-wrap:wrap;gap:6px 20px;font-size:13.5px"><span>Source: ArcGIS parcel <b>' + esc(d.parcel) + '</b></span><span>Area <b>' + MM.fmtNum(area) + ' m²</b></span><span>Converted UTM 40N → WGS84</span></div></div>' +
       '<div class="card pad"><label style="display:block;margin-bottom:12px"><span class="lbl">' + t('Site name') + '</span><input class="inp" style="width:100%" data-g="name" value="' + esc(d.name) + '"></label>' +
       '<span class="lbl">' + t('Shape') + '</span><div class="typeseg" style="margin-bottom:12px"><button class="' + (d.shape === 'polygon' ? 'on' : '') + '" data-act="gshape" data-arg="polygon">' + t('Polygon') + '</button><button class="' + (d.shape === 'circle' ? 'on' : '') + '" data-act="gshape" data-arg="circle">' + t('Circle') + '</button></div><button class="btn block" style="margin-bottom:12px" data-act="geohere">' + I('target', 16) + t('Use my current location') + '</button>' +
       (d.shape === 'circle' ? '<label style="display:block;margin-bottom:12px"><span class="lbl">' + t('Radius (m)') + '</span><input class="inp" style="width:100%" type="number" data-g="radius" value="' + d.radius + '"></label>' : '') +
@@ -844,6 +846,82 @@
       '<label style="display:block;margin-bottom:12px"><span class="lbl">' + t('Valid') + '</span><select class="sel" style="width:100%" data-g="valid"><option value="permanent"' + (d.valid === 'permanent' ? ' selected' : '') + '>' + t('Permanent') + '</option><option value="temporary"' + (d.valid === 'temporary' ? ' selected' : '') + '>' + t('Temporary') + (d.until ? ' · ' + t('ends') + ' ' + esc(d.until) : '') + '</option></select></label>' +
       '<span class="lbl">' + t('Assigned to') + '</span><div class="flexr" style="flex-wrap:wrap;gap:6px;margin-bottom:16px">' + d.depts.map(x => '<span class="pill p-gray nodot">' + esc(x) + ' <button style="border:0;background:none;padding:0;display:grid" data-act="gdel" data-arg="' + esc(x) + '">' + I('x', 13, 2.4) + '</button></span>').join('') + '<select class="sel" data-g="adddept" style="padding:4px 8px;font-size:13px;color:var(--brand);font-weight:600"><option value="">+ ' + t('Add') + '</option>' + allDepts.filter(x => !d.depts.includes(x)).map(x => '<option>' + esc(x) + '</option>').join('') + '</select></div>' +
       '<div class="grid g2" style="gap:10px"><button class="btn" data-act="gcancel">' + t('Cancel') + '</button><button class="btn primary" data-act="gsave">' + t('Save') + '</button></div></div></div>';
+  }
+  /* ---- location search on the geofence map: saved sites, typed coordinates and places from OpenStreetMap (Oman) ---- */
+  function geoSearchBox() {
+    const g = ui.geo;
+    return '<div class="gsr" data-stop>' + I('search', 17) + '<input id="gsrq" placeholder="' + esc(t('Search a location, area or coordinates…')) + '" value="' + esc(g.q || '') + '" autocomplete="off">' +
+      (g.q ? '<button class="gsr-x" data-act="gsrclear" title="' + esc(t('Clear')) + '">' + I('x', 15, 2.4) + '</button>' : '') +
+      '<div class="gsr-res" id="gsrres"' + (g.open ? '' : ' hidden') + '>' + geoSearchList() + '</div></div>';
+  }
+  function geoSearchList() {
+    const g = ui.geo, f = g.found || [];
+    if (g.busy && !f.length) return '<div class="gsr-m"><span class="spin dark"></span>' + t('Searching…') + '</div>';
+    if (!f.length) return '<div class="gsr-m">' + esc(g.err || t('No places found – try another name, or type coordinates like 23.6139, 58.5922')) + '</div>';
+    return f.map((r, i) => '<button data-act="gsrpick" data-arg="' + i + '">' + I(r.kind === 'site' ? 'target' : r.kind === 'xy' ? 'pin' : 'map', 17) + '<span><b>' + esc(r.name) + '</b><small>' + esc(r.sub) + '</small></span></button>').join('') +
+      (g.busy ? '<div class="gsr-m"><span class="spin dark"></span>' + t('Searching…') + '</div>' : '') + (g.err ? '<div class="gsr-m">' + esc(g.err) + '</div>' : '');
+  }
+  function geoSearchPaint() { const r = document.getElementById('gsrres'); if (!r) return; r.hidden = !ui.geo.open; r.innerHTML = geoSearchList(); }
+  let gsrTimer = null, gsrSeq = 0;
+  function geoSearch(q) {
+    const g = ui.geo; g.q = q; clearTimeout(gsrTimer); const s = q.trim();
+    if (!s) { g.found = []; g.open = false; g.busy = false; g.err = ''; geoSearchPaint(); return; }
+    const out = [];
+    const m = s.match(/^\s*(-?\d{1,2}(?:\.\d+)?)\s*[, ]\s*(-?\d{1,3}(?:\.\d+)?)\s*$/);
+    if (m && Math.abs(+m[1]) <= 90 && Math.abs(+m[2]) <= 180) out.push({ kind: 'xy', name: (+m[1]).toFixed(5) + ', ' + (+m[2]).toFixed(5), sub: t('Coordinates'), lat: +m[1], lng: +m[2] });
+    const lq = s.toLowerCase();
+    db().sites.forEach(x => { if ((x.name + ' ' + (x.nameAr || '') + ' ' + (x.wilayat || '')).toLowerCase().includes(lq)) { const c = MM.siteCenter(x); out.push({ kind: 'site', name: MM.nm(x), sub: t('Locations & Geofences') + (x.wilayat ? ' · ' + x.wilayat : ''), lat: c.lat, lng: c.lng }); } });
+    g.found = out; g.open = true; g.busy = !m && s.length >= 2;
+    g.err = !m && s.length < 2 && !out.length ? t('Keep typing to search places…') : '';
+    geoSearchPaint();
+    if (!g.busy) return;
+    const seq = ++gsrSeq;
+    gsrTimer = setTimeout(async () => {
+      // 1) Esri type-ahead suggestions (works from 2 letters, e.g. "so" → Sohar, Souq…)
+      // 2) Esri World Geocoder full search   3) OpenStreetMap Nominatim as a last backup
+      const lang = AR() ? 'ar' : 'en', places = [];
+      try {
+        const j = await geoJSON('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/suggest?f=json&maxSuggestions=8&countryCode=OMN&location=58.45,23.58&langCode=' + lang.toUpperCase() + '&text=' + encodeURIComponent(s));
+        (j.suggestions || []).filter(x => !x.isCollection).forEach(x => { const parts = String(x.text || '').replace(/, OMN$/, ', ' + t('Oman')).split(', '); places.push({ kind: 'place', name: parts[0], sub: parts.slice(1).join(', ') || t('Oman'), magicKey: x.magicKey, text: x.text }); });
+      } catch (e) { }
+      if (!places.length) try {
+        const j = await geoJSON('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=6&countryCode=OMN&outFields=PlaceName,Place_addr,City,Region&langCode=' + lang.toUpperCase() + '&location=58.45,23.58&singleLine=' + encodeURIComponent(s));
+        (j.candidates || []).forEach(c => { const a = c.attributes || {}; const name = a.PlaceName || String(c.address || '').split(',')[0]; places.push({ kind: 'place', name, sub: a.Place_addr && a.Place_addr !== name ? a.Place_addr : [a.City, a.Region].filter(Boolean).join(', ') || c.address, lat: +c.location.y, lng: +c.location.x }); });
+      } catch (e) { }
+      if (!places.length) {
+        try {
+          const list = await geoJSON('https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&countrycodes=om&accept-language=' + lang + '&q=' + encodeURIComponent(s));
+          list.forEach(p => { const parts = String(p.display_name || '').split(', '); places.push({ kind: 'place', name: p.name || parts[0], sub: parts.slice(1, 4).join(', '), lat: +p.lat, lng: +p.lon }); });
+        } catch (e) { }
+      }
+      if (seq !== gsrSeq) return;
+      // drop near-duplicates (same name within ~100 m)
+      places.forEach(p => { if (!out.some(o => o.name === p.name && (p.magicKey ? o.sub === p.sub : Math.abs(o.lat - p.lat) < .001 && Math.abs(o.lng - p.lng) < .001))) out.push(p); });
+      g.found = out; g.busy = false;
+      g.err = places.length ? '' : (navigator.onLine === false ? t('Map search needs an internet connection – saved sites and coordinates still work') : (out.length ? '' : t('No places found – try another name, or type coordinates like 23.6139, 58.5922')));
+      geoSearchPaint();
+    }, 350);
+  }
+  async function geoJSON(url) { const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 8000); try { const r = await fetch(url, { signal: ctl.signal }); if (!r.ok) throw new Error(r.status); return await r.json(); } finally { clearTimeout(tm); } }
+  async function geoSearchPick(i) {
+    const g = ui.geo, r = (g.found || [])[i]; if (!r) return;
+    // a type-ahead suggestion has no position yet – look it up once it is picked
+    if (r.magicKey && r.lat == null) {
+      g.busy = true; g.found = [r]; geoSearchPaint();
+      try {
+        const j = await geoJSON('https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&maxLocations=1&outFields=PlaceName&magicKey=' + encodeURIComponent(r.magicKey) + '&singleLine=' + encodeURIComponent(r.text));
+        const c = (j.candidates || [])[0]; if (!c) throw new Error('none');
+        r.lat = +c.location.y; r.lng = +c.location.x;
+      } catch (e) { g.busy = false; g.err = t('Could not find that place on the map – try another result'); geoSearchPaint(); return; }
+      g.busy = false;
+    }
+    const d = draft(), here = { lat: r.lat, lng: r.lng };
+    if (d.shape === 'circle') d.center = here; else { const c = MM.centroid(d.polygon); d.polygon = d.polygon.map(p => ({ lat: p.lat + here.lat - c.lat, lng: p.lng + here.lng - c.lng })); }
+    if (r.kind === 'place' && (!d.name || d.name === 'New site')) d.name = r.name;
+    g.q = r.name; g.open = false; g.found = [];
+    render();
+    const M = Maps.geo; if (M && M.map) M.map.setView([here.lat, here.lng], 17);
+    toast(t('Geofence moved to') + ' ' + r.name, t('Adjust the shape if needed, then press Save'), 'ok');
   }
   function geoEditor(layer) {
     const Lf = L2(), d = draft(), color = '#0E6B3E';
@@ -1168,6 +1246,7 @@
   document.addEventListener('click', ev => {
     if (ev.target.matches('input[type=checkbox][data-tkcheck],input[type=checkbox][data-empcheck]')) return;
     const el = ev.target.closest('[data-act]');
+    if (!el && ui.geo.open && !ev.target.closest('.gsr')) { ui.geo.open = false; geoSearchPaint(); }
     if (!el) { if (ui.menu && !ev.target.closest('[data-stop]')) { ui.menu = null; render(); } if (ui.search && !ev.target.closest('.srch')) { ui.search = ''; render(); } return; }
     const act = el.dataset.act, arg = el.dataset.arg;
     if (/TSK-\d{4}-\d{4}/.test(String(arg || '')) && !['tksel', 'ptab', 'tkday'].includes(act)) { toast(t('Read-only'), t('Past and upcoming days are shown for reference – switch to Today to act on tasks'), 'warn'); return; }
@@ -1186,7 +1265,7 @@
       case 'forgot': toast(t('Forgot Password?'), 'A reset link is sent through Active Directory self-service.', 'info'); break;
       case 'sso': signIn(true); break;
       case 'openmobile': window.open('mobile.html', '_blank'); break;
-      case 'console': location.href = 'index.html'; break;
+      case 'console': location.href = 'index1.html'; break;
       case 'reset': openConfirm({ title: t('Reset demo data'), body: 'All demo changes return to the starting sample data on every connected screen.', btn: t('Reset demo data'), danger: true }, () => { MM.reset(); ui.geo.draft = null; toast(t('Reset demo data'), '✓', 'ok'); }); break;
       case 'close': ui.modal = null; render(); break;
       case 'semp': ui.search = ''; ui.emp.sel = arg; ui.emp.ptab = 'overview'; nav('employees'); break;
@@ -1294,7 +1373,9 @@
         if (to === 'payroll') openConfirm({ title: t('Export to Oracle Payroll'), body: 'Approved attendance and overtime for <b>' + mn + '</b> will be sent to Oracle Payroll. After this the period is locked <b>permanently</b>.', btn: t('Export to Oracle Payroll') }, doIt); else doIt();
         break;
       }
-      case 'geosel': ui.geo.sel = arg; ui.geo.draft = null; render(); break;
+      case 'geosel': ui.geo.sel = arg; ui.geo.draft = null; ui.geo.q = ''; ui.geo.open = false; render(); break;
+      case 'gsrpick': geoSearchPick(+arg); break;
+      case 'gsrclear': ui.geo.q = ''; ui.geo.found = []; ui.geo.open = false; render(); { const q = document.getElementById('gsrq'); if (q) q.focus(); } break;
       case 'gshape': { const d = draft(); if (d.shape === arg) break; if (arg === 'circle') { const c = MM.centroid(d.polygon); d.center = c; d.radius = Math.round(Math.max(...d.polygon.map(p => MM.haversine(p, c)))); } else { const c = d.center, r = d.radius * 0.8; d.polygon = [[-1, 1], [1, 1], [1, -1], [-1, -1]].map(([a, b]) => MM.fromXY(a * r, b * r, c)); } d.shape = arg; render(); break; }
       case 'gdel': draft().depts = draft().depts.filter(x => x !== arg); render(); break;
       case 'gcancel': ui.geo.draft = null; render(); break;
@@ -1344,6 +1425,7 @@
     // Add Employee: the Arabic name follows the English name as it is typed, until the Arabic field is edited by hand
     if (el.id === 'aeName') { const a = document.getElementById('aeAr'); if (a && !a.dataset.manual) a.value = MM.toArabicName(el.value); return; }
     if (el.id === 'aeAr') { el.dataset.manual = el.value.trim() ? '1' : ''; const h = document.getElementById('aeArHint'); if (h) h.textContent = el.dataset.manual ? '· ' + t('edited by hand') : '· ' + t('filled in automatically'); return; }
+    if (el.id === 'gsrq') { geoSearch(el.value); return; }
     if (el.id === 'srch') { ui.search = el.value; const pos = el.selectionStart; render(); const s = document.getElementById('srch'); if (s) { s.focus(); s.setSelectionRange(pos, pos); } return; }
     if (el.dataset.f && el.tagName === 'INPUT' && el.type === 'text' || (el.dataset.f && el.tagName === 'INPUT' && !el.type)) { }
     if (el.dataset.f && el.tagName === 'INPUT' && !['date', 'time'].includes(el.type) && !el.dataset.f.startsWith('add.')) { setF(el.dataset.f, el.value); const pos = el.selectionStart, f = el.dataset.f; render(); const n = document.querySelector('[data-f="' + f + '"]'); if (n) { n.focus(); n.setSelectionRange(pos, pos); } }
@@ -1351,6 +1433,7 @@
   });
   document.addEventListener('focusout', () => setTimeout(() => { if (pending) scheduleRender(); }, 0));
   document.addEventListener('keydown', ev => {
+    if (ev.target.id === 'gsrq') { if (ev.key === 'Enter' && (ui.geo.found || []).length) { ev.preventDefault(); geoSearchPick(0); return; } if (ev.key === 'Escape') { ui.geo.open = false; geoSearchPaint(); return; } }
     if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 'k') { const s = document.getElementById('srch'); if (s) { ev.preventDefault(); s.focus(); } }
     if (ev.key === 'Escape' && (ui.modal || ui.menu)) { ui.modal = null; ui.menu = null; render(); }
   });

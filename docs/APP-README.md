@@ -15,13 +15,13 @@ database, so anything done on the phone shows in the portal straight away, and t
    server window, for example `http://192.168.1.25:8080/mobile.html`. Then use "Add to Home Screen"
    to get an app icon.
 
-No server? You can also open `index.html` directly from the folder. Everything still works, but only inside that one browser.
+No server? You can also open `index1.html` (demo console) directly from the folder. Everything still works, but only inside that one browser.
 
 | Page | URL |
 |---|---|
-| Demo console (phone + portal side by side) | `/` |
+| Demo console (phone + portal side by side) | `/index1.html` |
 | Mobile app | `/mobile.html` |
-| Web portal | `/portal.html` |
+| Web portal | `/` (index.html) |
 
 ## Demo on a real phone (real GPS)
 
@@ -95,9 +95,9 @@ Notes:
 ```
 Start-Demo.bat      one-click start
 serve.ps1           static server + shared demo database (data/db.json)
-index.html          demo console (phone + portal + demo script)
+index.html          web portal (opens at the site root)
+index1.html         demo console (phone + portal + demo script)
 mobile.html         employee / field worker app (installable PWA)
-portal.html         web management portal
 js/core.js          data, sync, rules engine, Arabic translations, icons
 js/mobile.js        mobile app
 js/portal.js        portal

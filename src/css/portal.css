@@ -354,7 +354,7 @@ html[dir=rtl] .login .lh .in { padding: 40px 7% 0 0; }
 .lbl { display: block; font-weight: 600; font-size: 14px; margin: 0 0 7px; }
 .lbl em { color: #D92D20; font-style: normal; }
 
-@media (max-width: 1360px) { .g5 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 1100px) { .g5 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 @media (max-width: 1100px) {
   .split { grid-template-columns: 1fr !important; }
   .g4, .g3 { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -709,3 +709,217 @@ html[dir=rtl] .l2-card .fi input { padding: 0 50px 0 46px; }
 /* sign-in error (e.g. demo server not running) */
 .l2-err { display: flex; gap: 8px; align-items: flex-start; background: #FEF3F2; border: 1px solid #FECDCA; color: #B42318; border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; font-size: 13px; line-height: 1.45; font-weight: 600; }
 .l2-err .ic { flex: none; margin-top: 1px; }
+
+/* location search on the geofence map */
+.gsr { position: absolute; z-index: 600; top: 10px; inset-inline-start: 54px; width: min(380px, calc(100% - 70px)); }
+.gsr > .ic { position: absolute; top: 11px; inset-inline-start: 12px; color: var(--muted); pointer-events: none; }
+.gsr input { width: 100%; height: 40px; border: 1px solid var(--line-2); border-radius: 10px; padding: 0 36px 0 38px; font: inherit; font-size: 13.5px; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.12); outline: none; }
+html[dir=rtl] .gsr input { padding: 0 38px 0 36px; }
+.gsr input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-50), 0 4px 14px rgba(0,0,0,.12); }
+.gsr-x { position: absolute; top: 8px; inset-inline-end: 8px; width: 24px; height: 24px; border: 0; border-radius: 6px; background: #F1F3F2; color: var(--muted); display: grid; place-items: center; padding: 0; cursor: pointer; }
+.gsr-res { margin-top: 6px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 28px rgba(0,0,0,.16); max-height: 320px; overflow: auto; padding: 4px; }
+.gsr-res[hidden] { display: none; }
+.gsr-res button { display: flex; align-items: flex-start; gap: 9px; width: 100%; border: 0; background: none; text-align: start; padding: 8px 10px; border-radius: 8px; cursor: pointer; font: inherit; color: var(--ink); }
+.gsr-res button:hover { background: #EFF7F2; }
+.gsr-res button .ic { flex: none; margin-top: 2px; color: var(--brand); }
+.gsr-res b { display: block; font-size: 13.5px; font-weight: 600; }
+.gsr-res small { display: block; font-size: 12px; color: var(--muted); line-height: 1.35; }
+.gsr-m { display: flex; align-items: center; gap: 8px; padding: 9px 10px; font-size: 12.5px; color: var(--muted); }
+
+/* ===== Sleek typography for the signed-in portal (Inter, lighter weights, smaller sizes). Login page keeps its own look. ===== */
+body:has(.shell) { --font: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif; font-family: var(--font); font-size: 13.5px; letter-spacing: -.006em; font-feature-settings: 'cv11', 'ss01'; }
+html[dir=rtl] body:has(.shell) { font-family: var(--font-ar); }
+body:has(.shell) b, body:has(.shell) strong, body:has(.shell) h1, body:has(.shell) h2, body:has(.shell) h3, body:has(.shell) h4 { font-weight: 600; }
+/* header + sidebar */
+body:has(.shell) .side nav button { font-size: 13.5px; min-height: 38px; padding-block: 8px; }
+body:has(.shell) .side nav button.on { font-weight: 500; }
+body:has(.shell) .side nav .cnt { font-size: 11px; font-weight: 600; min-width: 20px; height: 20px; }
+body:has(.shell) .top .ttl b { font-size: 14px; font-weight: 600; }
+body:has(.shell) .top .ttl .sub { font-size: 12px; }
+body:has(.shell) .srch input { font-size: 13px; }
+body:has(.shell) .who b { font-size: 13px; font-weight: 600; }
+body:has(.shell) .who small { font-size: 11.5px; }
+body:has(.shell) .rel:has(> [data-arg="lang"]) .tbtn { font-size: 13px; font-weight: 500; }
+/* page titles */
+body:has(.shell) .phead h1 { font-size: 21px; font-weight: 600; letter-spacing: -.018em; }
+body:has(.shell) .phead p { font-size: 13px; }
+body:has(.shell) .phead .pmeta > span { font-size: 12px; font-weight: 500; }
+body:has(.shell) .hero h1 { font-size: 25px; font-weight: 600; }
+body:has(.shell) .hero h1.xl { font-size: 28px; }
+body:has(.shell) .hero p { font-size: 14px; }
+body:has(.shell) .quote { font-size: 16px; }
+/* KPI tiles */
+body:has(.shell) .stat .sl { font-size: 12.5px; font-weight: 500; }
+body:has(.shell) .stat .sv { font-size: 24px; font-weight: 600; margin-top: 10px; }
+body:has(.shell) .stat .sp { font-size: 12px; font-weight: 600; }
+body:has(.shell) .stat .sn { font-size: 12px; }
+body:has(.shell) .kpi .kv { font-size: 22px; font-weight: 600; }
+@media (max-width: 1500px) { body:has(.shell) .stat .sv { font-size: 22px; } body:has(.shell) .stat .sn { font-size: 11.5px; } }
+/* cards + lists */
+body:has(.shell) .ch h3 { font-size: 15px; font-weight: 600; }
+body:has(.shell) .dpanel h2 { font-size: 16px; }
+body:has(.shell) .sec h4 { font-size: 13.5px; }
+body:has(.shell) .dh b, body:has(.shell) .tkday .dh b { font-size: 14px; }
+body:has(.shell) .stat-strip b { font-size: 14px; }
+body:has(.shell) .modal-h h3 { font-size: 16.5px; font-weight: 600; }
+body:has(.shell) .btn.lg { font-size: 15px; }
+body:has(.shell) .li .lt b { font-size: 13px; font-weight: 500; }
+body:has(.shell) .li .lt small, body:has(.shell) .li .tm { font-size: 12px; }
+body:has(.shell) .li .ii { width: 34px; height: 34px; }
+body:has(.shell) .cnt-pill { font-size: 12.5px; font-weight: 600; }
+body:has(.shell) .link { font-size: 12.5px; font-weight: 500; }
+body:has(.shell) .tabs button, body:has(.shell) .btabs button { font-size: 13px; }
+body:has(.shell) .tabs button.on, body:has(.shell) .btabs button.on { font-weight: 600; }
+body:has(.shell) .tabs button .n, body:has(.shell) .btabs button .n { font-weight: 600; font-size: 11.5px; }
+body:has(.shell) .schips button { font-size: 12.5px; font-weight: 500; }
+body:has(.shell) .schips button b { font-size: 14px; }
+/* tables, buttons, form controls */
+body:has(.shell) .tbl { font-size: 13px; }
+body:has(.shell) .tbl th { font-size: 12px; font-weight: 500; }
+body:has(.shell) .btn { font-size: 13px; font-weight: 500; }
+body:has(.shell) .inp, body:has(.shell) .sel { font-size: 13px; }
+body:has(.shell) .pill { font-size: 11.5px; font-weight: 500; }
+body:has(.shell) .av { font-weight: 600; }
+/* KPI row: keep all five cards on one line on laptop screens – tighter cards between 1100 and 1500 px */
+@media (min-width: 1101px) and (max-width: 1500px) {
+  body:has(.shell) .g5 { gap: 10px; }
+  body:has(.shell) .g5 .stat { padding: 11px 12px 12px; }
+  body:has(.shell) .g5 .stat .si { width: 26px; height: 26px; border-radius: 8px; }
+  body:has(.shell) .g5 .stat .sh { gap: 7px; }
+  body:has(.shell) .g5 .stat .sl { font-size: 12px; }
+  body:has(.shell) .g5 .stat .sv { font-size: 21px; margin-top: 9px; }
+  body:has(.shell) .g5 .stat .sn { font-size: 11px; }
+}
+
+/* ===== Sleeker shell: narrower left menu, lighter menu text, smaller headings ===== */
+@media (min-width: 1101px) { body:has(.shell) .shell:not(.collapsed) { grid-template-columns: 240px minmax(0, 1fr); } }
+body:has(.shell) .side .logo { min-height: 92px; padding: 12px 10px 8px; }
+body:has(.shell) .side .logo svg, body:has(.shell) .side .logo img { max-width: 92px; height: auto; }
+body:has(.shell) .side nav { padding: 4px 10px; }
+body:has(.shell) .side nav button { font-size: 13px; font-weight: 400; min-height: 36px; padding: 7px 10px; padding-inline-start: 12px; gap: 10px; border-radius: 8px; color: #33413A; }
+body:has(.shell) .side nav button + button { margin-top: 2px; }
+body:has(.shell) .side nav .lbl { font-size: 13px; font-weight: 400; top: 1px; }
+body:has(.shell) .side nav button.on, body:has(.shell) .side nav button.on .lbl { font-weight: 500; color: #fff; box-shadow: 0 3px 10px rgba(14,107,62,.18); }
+body:has(.shell) .side nav button > .ic { width: 17px; height: 17px; }
+body:has(.shell) .side nav .chev .ic { width: 14px; height: 14px; }
+body:has(.shell) .side nav .cnt { font-size: 10.5px; min-width: 18px; height: 18px; padding: 0 5px; }
+/* top bar */
+body:has(.shell) .top .ttl b { font-size: 13px; }
+body:has(.shell) .top .ttl .sub { font-size: 11.5px; }
+body:has(.shell) .srch input { height: 36px; font-size: 12.5px; }
+body:has(.shell) .who .av { width: 32px; height: 32px; font-size: 11.5px; }
+body:has(.shell) .who b { font-size: 12.5px; }
+body:has(.shell) .who small { font-size: 11px; }
+body:has(.shell) .rel:has(> [data-arg="lang"]) .tbtn { font-size: 12.5px; }
+/* page + card headings */
+body:has(.shell) .phead h1 { font-size: 19px; letter-spacing: -.015em; }
+body:has(.shell) .phead p { font-size: 12.5px; }
+body:has(.shell) .phead .crumbs, body:has(.shell) .phead .crumbs button { font-size: 11.5px; }
+body:has(.shell) .phead .pmeta > span { font-size: 11.5px; padding: 4px 10px; }
+body:has(.shell) .hero h1 { font-size: 22px; }
+body:has(.shell) .hero h1.xl { font-size: 24px; }
+body:has(.shell) .hero p { font-size: 13px; }
+body:has(.shell) .ch h3 { font-size: 14px; gap: 7px; }
+body:has(.shell) .ch h3 .ic { width: 17px; height: 17px; }
+body:has(.shell) .ch .sel.psel, body:has(.shell) .sel.psel { height: 30px; font-size: 12px; font-weight: 500; padding: 0 26px 0 10px; }
+body:has(.shell) .dpanel h2 { font-size: 15px; }
+body:has(.shell) .sec h4 { font-size: 13px; }
+body:has(.shell) .modal-h h3 { font-size: 15.5px; }
+/* lists, legends, links */
+body:has(.shell) .li .lt b { font-size: 12.5px; }
+body:has(.shell) .li .lt small, body:has(.shell) .li .tm { font-size: 11.5px; }
+body:has(.shell) .li .ii { width: 32px; height: 32px; }
+body:has(.shell) .dlist, body:has(.shell) .legend2 { font-size: 12.5px; }
+body:has(.shell) .link { font-size: 12px; }
+body:has(.shell) .cnt-pill { font-size: 12px; }
+body:has(.shell) .person b { font-size: 13px; font-weight: 500; }
+body:has(.shell) .lbl:not(.side .lbl) { font-size: 12.5px; font-weight: 500; }
+body:has(.shell) .side nav .chev { width: 12px; }
+body:has(.shell) .ch .sel.psel { max-width: 118px; }
+body:has(.shell) .ch h3 { line-height: 1.25; }
+body:has(.shell) .kpi .kv { font-size: 20px; }
+
+/* ===== Field Operations + task details panel – same quiet scale as the dashboard ===== */
+body:has(.shell) .chipsel { gap: 5px; }
+body:has(.shell) .chipsel button { font-size: 12px; font-weight: 500; padding: 4px 9px; border-radius: 7px; }
+body:has(.shell) .fo3 .li { padding: 8px 0; }
+body:has(.shell) .fo3 .muted, body:has(.shell) .fo3 .muted2 { font-size: 12px; }
+body:has(.shell) .dpanel { padding: 14px 16px; }
+body:has(.shell) .dpanel .dh { margin-bottom: 10px; gap: 8px; align-items: center; }
+body:has(.shell) .dpanel .dh-t { font-size: 14px; font-weight: 600; }
+body:has(.shell) .dpanel h2 { font-size: 14.5px; line-height: 1.3; }
+body:has(.shell) .dpanel .tabs { gap: 0; }
+body:has(.shell) .dpanel .tabs button { font-size: 12.5px; padding: 8px 9px; white-space: nowrap; }
+body:has(.shell) .dpanel .prog { height: 6px !important; }
+body:has(.shell) .dpanel .flexr[style*="space-between"] { font-size: 12.5px; font-weight: 500 !important; }
+body:has(.shell) .kv { font-size: 12.5px; gap: 8px 10px; }
+body:has(.shell) .kv > span { font-size: 12px; }
+body:has(.shell) .kv > b { font-weight: 500; }
+body:has(.shell) .kv > b.kdesc { font-weight: 400; color: #33413A; line-height: 1.45; }
+body:has(.shell) .kv .link { font-size: 11.5px; }
+body:has(.shell) .kassign { gap: 4px; min-width: 0; }
+body:has(.shell) .kassign .person { min-width: 0; flex: 1 1 auto; gap: 6px; }
+body:has(.shell) .kassign .person > div { min-width: 0; }
+body:has(.shell) .kassign .person b { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+body:has(.shell) .kassign .person small { display: none; }
+body:has(.shell) .kassign .av { width: 26px; height: 26px; font-size: 10px; }
+body:has(.shell) .kassign > span[style="flex:1"] { display: none; }
+body:has(.shell) .kassign .btn.icon { width: 28px; height: 28px; padding: 0; flex: none; }
+body:has(.shell) .sec { margin-top: 12px; padding-top: 12px; }
+body:has(.shell) .sec .ok-text, body:has(.shell) .sec .bad-text { font-size: 12.5px; font-weight: 500 !important; }
+body:has(.shell) .tl2 { font-size: 12.5px; }
+body:has(.shell) .tl2 b { font-weight: 500 !important; }
+body:has(.shell) .tl2 .t { font-size: 11.5px; }
+body:has(.shell) .dpanel .actions2 .btn { font-size: 12.5px; padding-block: 7px; }
+body:has(.shell) .dpanel .tabs button { padding: 8px 7px; font-size: 12px; }
+@media (max-width: 1500px) { body:has(.shell) .fo3 .dpanel .kv { grid-template-columns: 84px minmax(0, 1fr); } }
+/* task board + task cards */
+body:has(.shell) .kcol h5 { font-size: 12.5px; font-weight: 600; }
+body:has(.shell) .kcol h5 span { font-size: 12px; font-weight: 600; }
+body:has(.shell) .kc b { font-size: 12.5px; font-weight: 500; line-height: 1.3; }
+body:has(.shell) .kc .muted2, body:has(.shell) .muted2 { font-size: 11.5px; }
+body:has(.shell) .tcard .b b { font-size: 13px; font-weight: 500; }
+body:has(.shell) .btabs button { font-size: 12.5px; }
+body:has(.shell) .maplegend span { font-size: 12px; }
+body:has(.shell) .tl2 b { font-size: 12.5px; }
+/* Field Teams list – compact rows */
+body:has(.shell) .fo-live .li.click { padding: 6px 6px; gap: 8px; }
+body:has(.shell) .fo-live .li.click .person b { font-size: 12px; font-weight: 500; }
+body:has(.shell) .fo-live .li.click .person small { font-size: 11px; }
+body:has(.shell) .fo-live .li.click .av { width: 26px; height: 26px; font-size: 10px; }
+body:has(.shell) .fo-live .li.click .pill { font-size: 10.5px; padding: 1px 7px; }
+body:has(.shell) .fo3 .inp { font-size: 12.5px; }
+body:has(.shell) .fo3 .muted { font-size: 11.5px; }
+
+/* ===== Desktop density: at 100% browser zoom the signed-in portal renders at the 80% reference scale =====
+   (font sizes, spacing and column widths all shrink together, so every page keeps its proportions) */
+@media (min-width: 1100px) {
+  html:not(.embed):has(.shell) { --fit: .8; zoom: var(--fit); }
+  html:not(.embed):has(.shell) .shell { min-height: calc(100vh / var(--fit)); }
+  html:not(.embed):has(.shell) .side { height: calc(100vh / var(--fit)); }
+  html:not(.embed):has(.shell) .modal { max-height: calc(100vh / var(--fit) - 32px); }
+}
+body:has(.shell) .btn.block[data-act="tkgroup"] { padding-inline: 10px; font-size: 12.5px; gap: 6px; }
+
+/* ===== Login page: same sleek look as the dashboard – Inter, lighter weights, same 80% desktop scale ===== */
+.login2 { font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif; letter-spacing: -.006em; }
+html[dir=rtl] .login2 { font-family: var(--font-ar); }
+.l2-left h1 { font-weight: 700; letter-spacing: -.03em; }
+.l2-left p { font-weight: 400; }
+.l2-feats b { font-weight: 500; }
+.l2-card h2 { font-weight: 700; letter-spacing: -.025em; }
+.l2-card .fld > span { font-weight: 600; }
+.l2-lang button { font-weight: 600; }
+.l2-signin { font-weight: 600; }
+.l2-sso, .l2-or, .l2-forgot a { font-weight: 500; }
+@media (min-width: 1100px) {
+  html:not(.embed):has(.login2) { zoom: .8; }
+  html:not(.embed):has(.login2) .login2 { min-height: calc(100vh / .8); }
+}
+/* login heading on one line where there is room (no forced line break) */
+.l2-left { max-width: min(1000px, 60vw); }
+.l2-left h1 { font-size: clamp(28px, 2.9vw, 46px); line-height: 1.1; }
+body:has(.shell) .side .logo img { width: 92px; max-width: 100%; height: auto; }
+/* sidebar logo: aligned to the start edge, lined up with the menu icons (centred again when the menu is collapsed) */
+body:has(.shell) .side .logo { place-items: center start; justify-items: start; padding-inline: 22px 10px; }
+body:has(.shell) .shell.collapsed .side .logo { place-items: center; justify-items: center; padding-inline: 10px; }

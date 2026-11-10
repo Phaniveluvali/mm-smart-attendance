@@ -3,106 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MM Smart Attendance Demo</title>
+<title>Smart Attendance &amp; Field Operations – Muscat Municipality</title>
 <link rel="icon" href="assets/icon-192.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Reem+Kufi:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="css/base.css">
-<style>
-  html, body { height: 100%; }
-  body { display: flex; flex-direction: column; background: #E6EBEA; overflow: hidden; }
-  .top { display: flex; align-items: center; gap: 14px; padding: 10px 18px; background: #fff; border-bottom: 1px solid var(--line); flex: none; flex-wrap: wrap; }
-  .top .lg { width: 36px; height: 36px; border-radius: 10px; background: var(--brand); color: #fff; display: grid; place-items: center; }
-  .top b { font-size: 16px; } .top small { color: var(--muted); display: block; font-size: 12.5px; }
-  .top .grow { flex: 1; }
-  .conn { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-  .stage { flex: 1; display: grid; grid-template-columns: 430px 1fr; min-height: 0; }
-  .left { overflow: auto; padding: 16px 18px 24px; border-inline-end: 1px solid #D5DDDC; }
-  .phone { width: 392px; height: 800px; margin: 0 auto; border: 10px solid #12161B; border-radius: 46px; overflow: hidden; background: #fff; box-shadow: 0 24px 60px rgba(0,0,0,.22); position: relative; }
-  .phone iframe { width: 100%; height: 100%; border: 0; display: block; }
-  .right { position: relative; overflow: hidden; background: #fff; }
-  .right iframe { border: 0; position: absolute; top: 0; left: 0; transform-origin: 0 0; }
-  .script { margin-top: 18px; }
-  .script h3 { margin: 0 0 8px; font-size: 15px; display: flex; justify-content: space-between; align-items: center; }
-  .step { display: flex; gap: 10px; padding: 8px 10px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; cursor: pointer; }
-  .step:hover { background: rgba(255,255,255,.6); }
-  .step input { accent-color: var(--brand); width: 17px; height: 17px; margin-top: 1px; flex: none; }
-  .step b { display: block; font-size: 14px; }
-  .step.done { opacity: .55; }
-  .step small { color: var(--muted); }
-  .tip { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 13px; color: var(--ink-2); margin-top: 12px; line-height: 1.5; }
-  .tip code { background: var(--bg); padding: 1px 5px; border-radius: 5px; font-size: 12.5px; }
-  select.z { border: 1px solid var(--line-2); border-radius: 10px; padding: 6px 10px; background: #fff; }
-  @media (max-width: 1100px) { .stage { grid-template-columns: 1fr; overflow: auto; } .right { min-height: 900px; } body { overflow: auto; } }
-</style>
+<link rel="stylesheet" href="css/portal.css">
 </head>
 <body>
-<div class="top">
-  <span class="lg"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><path d="m9.2 9.2 2 2 3.8-3.8"/></svg></span>
-  <div><b>MM Smart Attendance · Live demo console</b><small>Mobile app (left) and web portal (right) share one live database — every action shows on both</small></div>
-  <span class="grow"></span>
-  <span class="conn" id="conn"><span class="live-dot"></span> connecting…</span>
-  <label style="font-size:13px;color:var(--muted)">Portal zoom <select class="z" id="zoom"><option value="1">100%</option><option value="0.85">85%</option><option value="0.75" selected>75%</option><option value="0.65">65%</option></select></label>
-  <a class="btn sm" href="mobile.html" target="_blank">Open mobile app ↗</a>
-  <a class="btn sm" href="portal.html" target="_blank">Open portal ↗</a>
-  <button class="btn sm" id="reset">Reset demo data</button>
-</div>
-<div class="stage">
-  <div class="left">
-    <div class="phone"><iframe id="phoneFrame" src="mobile.html?embed=1" title="Mobile app" allow="camera; geolocation"></iframe></div>
-    <div class="script">
-      <h3>Live demo flow (RFP order) <button class="btn sm ghost" id="clr">Clear ticks</button></h3>
-      <div id="steps"></div>
-      <div class="tip" id="tip"></div>
-    </div>
-  </div>
-  <div class="right" id="right"><iframe id="portalFrame" src="portal.html#dashboard" title="Web portal"></iframe></div>
-</div>
-<script>
-  const STEPS = [
-    ['Login', 'Phone: "Sign in with Face ID". Switch EN / عربي. Demo controls → "Unregistered phone" shows the device-binding block.', 'dashboard'],
-    ['Check-in inside the fence', 'The phone uses its real GPS by default. Presenting away from the site? Phone ⚙ → "Inside Muttrah office" first. Phone: tap Check In → take a photo of the work location (or "Use sample photo") → green confirmation with server time. Portal: Approvals → Time entries shows the photo for verification.', 'approvals'],
-    ['Check-in outside the fence', 'Phone ⚙ → "1.2 km outside the fence", tap Check In → blocked with reasons + reference.', 'approvals'],
-    ['Fake-GPS attempt', 'Phone ⚙ → back inside + "Fake-GPS app running" → blocked LOC_MOCK. Portal: Approvals & audit.', 'approvals'],
-    ['Missed-punch request', 'Phone: Requests → + New → Missed punch → Submit (opens Pending approval). Portal: Approvals → Approve → phone shows "Approved" in Notifications.', 'approvals'],
-    ['Offline punch', 'Phone ⚙ → "Inside Muttrah office" + "Airplane mode". Check In → it appears in the Offline queue on Home and Pending approval. Turn airplane mode off → it syncs, the server re-checks it and it shows in Portal: Approvals → Time entries.', 'approvals'],
-    ['Assign a task', 'Portal: Field dispatch → + Create task (Ahmed) → it appears on the phone instantly.', 'dispatch'],
-    ['Field visit', 'Phone: Home → My day → open the task (it shows its time: Now / Starts at / Overdue) → ⚙ "At the task site" → “I’m at the site – Start task” → Add photo → Complete task.', 'dispatch'],
-    ['Supervisor sign-off', 'Portal: task card "Awaiting your sign-off" → review photos + location → Sign off.', 'dispatch'],
-    ['Shifts & geofence setup', 'Portal: Shifts & roster (drag a shift) and Geofences (drag polygon corners, Save).', 'geofences'],
-    ['Dashboard & report', 'Portal: Dashboard KPIs, live activity, Export → Excel / PDF / CSV.', 'dashboard'],
-    ['Audit trail', 'Portal: Approvals & audit → anti-fraud log with reason codes → Export to CSV.', 'approvals'],
-  ];
-  const done = JSON.parse(localStorage.getItem('mmsa.console.done') || '{}');
-  function drawSteps() {
-    document.getElementById('steps').innerHTML = STEPS.map((s, i) => '<label class="step ' + (done[i] ? 'done' : '') + '" data-i="' + i + '"><input type="checkbox" ' + (done[i] ? 'checked' : '') + '><span><b>' + (i + 1) + '. ' + s[0] + '</b><small>' + s[1] + '</small></span></label>').join('');
-  }
-  drawSteps();
-  document.getElementById('steps').addEventListener('change', e => { const i = e.target.closest('.step').dataset.i; done[i] = e.target.checked; localStorage.setItem('mmsa.console.done', JSON.stringify(done)); drawSteps(); });
-  document.getElementById('steps').addEventListener('click', e => { const st = e.target.closest('.step'); if (!st || e.target.tagName === 'INPUT') return; const p = STEPS[st.dataset.i][2]; document.getElementById('portalFrame').contentWindow.location.hash = p; });
-  document.getElementById('clr').onclick = () => { Object.keys(done).forEach(k => delete done[k]); localStorage.setItem('mmsa.console.done', '{}'); drawSteps(); };
-  function fit() {
-    const z = +document.getElementById('zoom').value, r = document.getElementById('right'), f = document.getElementById('portalFrame');
-    f.style.width = (r.clientWidth / z) + 'px'; f.style.height = (r.clientHeight / z) + 'px'; f.style.transform = 'scale(' + z + ')';
-    localStorage.setItem('mmsa.console.zoom', z);
-  }
-  const zs = localStorage.getItem('mmsa.console.zoom'); if (zs) document.getElementById('zoom').value = zs;
-  document.getElementById('zoom').onchange = fit; window.addEventListener('resize', fit); fit();
-  document.getElementById('reset').onclick = async () => {
-    if (!confirm('Reset all demo data to the starting sample data?')) return;
-    try { await fetch('api/db', { method: 'DELETE' }); } catch (e) { }
-    Object.keys(localStorage).filter(k => k.startsWith('mmsa.') && !k.startsWith('mmsa.console')).forEach(k => localStorage.removeItem(k));
-    location.reload();
-  };
-  (async () => {
-    let server = false;
-    if (location.protocol.startsWith('http')) { try { server = (await fetch('api/ver')).ok; } catch (e) { } }
-    const host = location.host;
-    document.getElementById('conn').innerHTML = '<span class="live-dot"></span> ' + (server ? 'Shared demo server · ' + host : 'Offline file mode · this browser only');
-    document.getElementById('tip').innerHTML = server
-      ? '<b>Show it on a real phone:</b> connect the phone to the same Wi-Fi and open <code>http://&lt;this-laptop-IP&gt;:' + (location.port || 80) + '/mobile.html</code> (the IP is printed in the server window). Phone and portal stay in sync.<br><b>Tip:</b> the ⚙ button on the phone opens the demo controls (location, fake GPS, airplane mode, clock).'
-      : '<b>Running from a file.</b> Everything works in this browser. To sync a real phone with the portal, start <code>Start-Demo.bat</code> instead.<br><b>Tip:</b> the ⚙ button on the phone opens the demo controls.';
-  })();
-</script>
+<div id="app"></div>
+<div class="toasts" id="toasts"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/core.js"></script>
+<script src="js/brand.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/portal.js"></script>
 </body>
 </html>
