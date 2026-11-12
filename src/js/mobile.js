@@ -327,7 +327,7 @@
   /* ---------- the employee's day: 1 check in · 2 tasks at their locations and times · 3 check out ---------- */
   const SLOT_MIN = 60, EARLY_MIN = 30;
   const minsTxt = m => m < 60 ? m + ' ' + t('min') : Math.floor(m / 60) + ' ' + t('h') + (m % 60 ? ' ' + (m % 60) + ' ' + t('min') : '');
-  const taskWin = x => ({ start: x.due - SLOT_MIN * 60000, end: x.due });
+  const taskWin = x => ({ start: x.start && x.start < x.due ? x.start : x.due - SLOT_MIN * 60000, end: x.due });
   const taskStep = x => ['done', 'signed'].includes(x.status) ? 2 : ['onsite', 'inprogress', 'delayed'].includes(x.status) ? 1 : 0;
   const canStartTask = x => MM.now() >= taskWin(x).start - EARLY_MIN * 60000;
   // where a task stands against the clock (system time)

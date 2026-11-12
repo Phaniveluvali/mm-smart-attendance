@@ -2,7 +2,7 @@ FROM nginx:1.27-alpine
 
 LABEL maintainer="Tecnics Platform Team admin@tecnics-internal.online"
 LABEL app="mm-smart-attendance"
-LABEL version="1.0.3"
+LABEL version="1.0.4"
 
 # Remove default nginx assets
 RUN rm -rf /usr/share/nginx/html/*

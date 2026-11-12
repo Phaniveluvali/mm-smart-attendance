@@ -19,9 +19,10 @@ Static web deployment of the **Muscat Municipality Smart Attendance** applicatio
 
 - **GitOps Controller:** ArgoCD (`argocd/application.yaml`, automated sync, `prune: true`, `selfHeal: true`)
 - **Namespace:** `mm-smart-attendance`
-- **Active Container Image:** `krishnaveluvali/mm-smart-attendance:v1.0.3` (`nginx:1.27-alpine`)
+- **Active Container Image:** `krishnaveluvali/mm-smart-attendance:v1.0.4` (`nginx:1.27-alpine`)
 - **Rollback Image Versions Retained on Docker Hub & Git Tags:**
-  - `v1.0.3` — New UI release (`index.html` Web Portal, `index1.html` Split Demo Console, updated `mobile.html`, `css/portal.css`, `js/mobile.js`, `js/portal.js`)
+  - `v1.0.4` — Client `mm-smart-attendanc-v4.zip` release (updated `css/portal.css`, `js/mobile.js`, `js/portal.js`)
+  - `v1.0.3` — `mm-smart-attendanc-v1.zip` release (`index.html` Web Portal, `index1.html` Split Demo Console, `/portal.html` redirect)
   - `v1.0.2` — Previous code release with `/mmsmartattendance` context root & `local-path` PV (`index.html` console + `portal.html`)
   - `v1.0.1` — Context root `/mm-smartattendance` (stateless)
   - `v1.0.0` — Initial release under `/mm-smart-attendance`
@@ -64,8 +65,8 @@ mm-smart-attendance/
 3. Build and locally verify the Nginx image:
 
 ```bash
-docker build -t krishnaveluvali/mm-smart-attendance:v1.0.3 -t krishnaveluvali/mm-smart-attendance:latest .
-docker run -d -p 18089:80 --name mm-test krishnaveluvali/mm-smart-attendance:v1.0.3
+docker build -t krishnaveluvali/mm-smart-attendance:v1.0.4 -t krishnaveluvali/mm-smart-attendance:latest .
+docker run -d -p 18089:80 --name mm-test krishnaveluvali/mm-smart-attendance:v1.0.4
 curl -i http://localhost:18089/healthz
 curl -i http://localhost:18089/mmsmartattendance/
 curl -i http://localhost:18089/mmsmartattendance/index1.html
@@ -74,11 +75,11 @@ docker rm -f mm-test
 
 ### Step 2: Push Image & Git Repository
 
-1. Push the immutable versioned image tag to Docker Hub (never overwriting previous tags like `v1.0.2`):
+1. Push the immutable versioned image tag to Docker Hub (never overwriting previous tags like `v1.0.3`):
 
 ```bash
 docker login -u krishnaveluvali
-docker push krishnaveluvali/mm-smart-attendance:v1.0.3
+docker push krishnaveluvali/mm-smart-attendance:v1.0.4
 docker push krishnaveluvali/mm-smart-attendance:latest
 ```
 
@@ -86,8 +87,8 @@ docker push krishnaveluvali/mm-smart-attendance:latest
 
 ```bash
 git add -A
-git commit -m "feat(app): deploy v1.0.3 code with /mmsmartattendance route alignment"
-git tag v1.0.3
+git commit -m "feat(app): deploy v1.0.4 client release (mm-smart-attendanc-v4.zip)"
+git tag v1.0.4
 git push origin main --tags
 ```
 
@@ -107,10 +108,10 @@ kubectl get pvc,pv,deploy,pods,svc,ing -n mm-smart-attendance -o wide
 
 ## Fast Rollback Procedure (Using Retained Image Versions)
 
-Every release keeps an immutable Docker Hub tag (`v1.0.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`) and matching Git tag. Because `initContainer` (`seed-static-assets`) checks `[ "$(cat .image-version)" != "$APP_VERSION" ]`, switching back to an earlier image tag automatically restores both the Nginx config AND the older static files inside the PV:
+Every release keeps an immutable Docker Hub tag (`v1.0.0`, `v1.0.1`, `v1.0.2`, `v1.0.3`, `v1.0.4`) and matching Git tag. Because `initContainer` (`seed-static-assets`) checks `[ "$(cat .image-version)" != "$APP_VERSION" ]`, switching back to an earlier image tag automatically restores both the Nginx config AND the older static files inside the PV:
 
 ```bash
-# 1. Revert the deployment change in Git (or set image + APP_VERSION in k8s/deployment.yaml back to v1.0.2)
+# 1. Revert the deployment change in Git (or set image + APP_VERSION in k8s/deployment.yaml back to v1.0.3)
 git revert HEAD --no-edit
 git push origin main
 
@@ -141,7 +142,7 @@ sudo chmod -R a+rX "$PV_HOST_DIR"
 
 *(Or copy via `kubectl cp ./src/index.html mm-smart-attendance/$(kubectl get pod -n mm-smart-attendance -l app=mm-smart-attendance -o jsonpath='{.items[0].metadata.name}'):/usr/share/nginx/html/index.html`.)*
 
-### 3. Revert Temporary PV Edits Back to Active Image (`v1.0.3`)
+### 3. Revert Temporary PV Edits Back to Active Image (`v1.0.4`)
 
 ```bash
 sudo rm -f "$PV_HOST_DIR/.image-version"

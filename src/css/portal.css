@@ -923,3 +923,20 @@ body:has(.shell) .side .logo img { width: 92px; max-width: 100%; height: auto; }
 /* sidebar logo: aligned to the start edge, lined up with the menu icons (centred again when the menu is collapsed) */
 body:has(.shell) .side .logo { place-items: center start; justify-items: start; padding-inline: 22px 10px; }
 body:has(.shell) .shell.collapsed .side .logo { place-items: center; justify-items: center; padding-inline: 10px; }
+/* geofence editor: "+" handles in the middle of each polygon side (drag or click to add a corner) */
+.mk-mid { width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,.92); border: 2px dashed #0E6B3E; color: #0E6B3E; font: 700 13px/14px var(--font); text-align: center; cursor: copy; opacity: .8; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
+.mk-mid:hover { opacity: 1; background: #E7F4EC; border-style: solid; }
+/* Reassign popup: searchable employee list */
+.ra-list { max-height: 260px; overflow: auto; border: 1px solid var(--line); border-radius: 10px; padding: 4px; }
+.ra-row { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; background: none; text-align: start; padding: 7px 8px; border-radius: 8px; cursor: pointer; font: inherit; color: var(--ink); }
+.ra-row[hidden] { display: none; }
+.ra-row:hover { background: #F2F7F4; }
+.ra-row.on { background: #E7F4EC; box-shadow: inset 0 0 0 1.5px var(--brand); }
+.ra-row .av { width: 30px; height: 30px; font-size: 11px; }
+.ra-t { flex: 1; min-width: 0; }
+.ra-t b { display: block; font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ra-t small { display: block; font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ra-n { flex: none; font-size: 11px; color: var(--muted); background: #F1F4F2; border-radius: 99px; padding: 2px 8px; }
+.ra-ck { flex: none; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: transparent; }
+.ra-row.on .ra-ck { background: var(--brand); }
+.ra-none { padding: 14px; text-align: center; font-size: 12.5px; }
